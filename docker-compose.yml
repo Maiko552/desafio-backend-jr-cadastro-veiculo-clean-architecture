@@ -1,0 +1,20 @@
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: postgres-autoscore
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: autoscore
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+      TZ: America/Sao_Paulo
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata_autoscore:/var/lib/postgresql/data
+
+volumes:
+  pgdata_autoscore:
+
+
