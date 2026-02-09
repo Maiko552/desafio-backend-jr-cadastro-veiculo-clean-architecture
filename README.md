@@ -1,11 +1,11 @@
-📌 Desafio Backend JR — Cadastro de Veículos (Clean Architecture + DDD)
+📌 ##Desafio Backend JR — Cadastro de Veículos (Clean Architecture + DDD)
 
 API REST para cadastro de veículos.
 Antes de persistir, a aplicação consulta uma API externa (Mockaroo) para obter marca, modelo, chassi e status de licenciamento, consolidando os dados no retorno.
 
 Além do requisito do desafio, o projeto foi estruturado com Clean Architecture / DDD (Ports & Adapters) para separar regras de negócio de detalhes de infra (JPA, WebClient, Spring MVC).
 
-✅ Funcionalidades
+✅ #Funcionalidades
 
 POST /veiculos para cadastrar veículo
 
@@ -23,7 +23,7 @@ Migração de schema com Flyway
 
 Tratamento centralizado de erros (RestControllerAdvice) (se você já implementou)
 
-🧱 Arquitetura
+🧱 #Arquitetura
 
 Camadas (Clean Architecture / DDD):
 
@@ -63,7 +63,7 @@ Controllers (VeiculoController)
 
 Handler global de exceptions (opcional)
 
-🔧 Tecnologias e ferramentas
+🔧 #Tecnologias e ferramentas
 
 Java (versão do projeto)
 
@@ -89,7 +89,7 @@ Docker / Docker Compose
 
 Postman/Insomnia para testes de API
 
-📦 Dependências principais (Maven)
+📦 #Dependências principais (Maven)
 
 spring-boot-starter-webmvc
 
