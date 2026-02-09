@@ -1,108 +1,90 @@
-📌 ##Desafio Backend JR — Cadastro de Veículos (Clean Architecture + DDD)
+# 📌 Desafio Backend JR — Cadastro de Veículos  
+### Clean Architecture + DDD (Ports & Adapters)
 
 API REST para cadastro de veículos.
-Antes de persistir, a aplicação consulta uma API externa (Mockaroo) para obter marca, modelo, chassi e status de licenciamento, consolidando os dados no retorno.
 
-Além do requisito do desafio, o projeto foi estruturado com Clean Architecture / DDD (Ports & Adapters) para separar regras de negócio de detalhes de infra (JPA, WebClient, Spring MVC).
+Antes de persistir, a aplicação consulta uma API externa (Mockaroo) para obter **marca, modelo, chassi e status de licenciamento**, consolidando os dados no retorno.
 
-✅ #Funcionalidades
+Além do requisito do desafio, o projeto foi estruturado com **Clean Architecture / DDD (Ports & Adapters)** para separar regras de negócio de detalhes de infraestrutura (JPA, WebClient, Spring MVC).
 
-POST /veiculos para cadastrar veículo
+---
 
-Validação de duplicidade:
+## ✅ Funcionalidades
 
-placa já cadastrada
+- `POST /veiculos` para cadastrar veículo
+- Validação de duplicidade:
+  - Placa já cadastrada
+  - CPF já cadastrado
+- Consulta à API externa (Mockaroo) antes de salvar
+- Persistência em PostgreSQL
+- Migração de schema com Flyway
+- Tratamento centralizado de erros (`@RestControllerAdvice`)
 
-cpf já cadastrado
+---
 
-Consulta à API externa (Mockaroo) antes de salvar
+## 🧱 Arquitetura
 
-Persistência em PostgreSQL
+### Camadas (Clean Architecture / DDD)
 
-Migração de schema com Flyway
+#### 📂 domain
+- Entidades e Value Objects (`Veiculo`, `VeiculoInfo`)
+- Contratos (Gateways / Ports)
+  - `VeiculoGateway`
+  - `VeiculoInfoGateway`
+- UseCase contract (interfaces)
+- Exceções de domínio
 
-Tratamento centralizado de erros (RestControllerAdvice) (se você já implementou)
+#### 📂 application
+- Implementação dos UseCases (`SalvarVeiculoUseCaseImpl`)
+- Commands / DTOs de entrada (`CadastrarVeiculoCommand`)
+- Mappers de aplicação (`VeiculoMapper`)
 
-🧱 #Arquitetura
+#### 📂 infra
+- Adapters de persistência (JPA)
+- Entities JPA (`VeiculoEntity`)
+- Mappers entity ↔ domain (`VeiculoEntityMapper`)
+- Integração externa via WebClient (`VeiculoInfoGatewayMockaroo`)
+- Configuração (`WebClientConfig`)
 
-Camadas (Clean Architecture / DDD):
+#### 📂 presentation
+- Controllers (`VeiculoController`)
+- Handler global de exceptions (opcional)
 
-domain
+---
 
-Entidades e Value Objects (Veiculo, VeiculoInfo)
+## 🔧 Tecnologias e Ferramentas
 
-Contratos (Gateways / Ports) (VeiculoGateway, VeiculoInfoGateway)
+- Java
+- Spring Boot
+  - Spring Web MVC (API REST)
+  - Spring Data JPA (Persistência)
+  - Spring Validation (Bean Validation)
+  - Spring WebFlux (WebClient)
+- PostgreSQL (Docker)
+- Flyway (Migrations)
+- Maven
+- Lombok
+- Docker / Docker Compose
+- Postman / Insomnia
 
-UseCase contract (interface)
+---
 
-Exceções de domínio
+## 📦 Dependências Principais (Maven)
 
-application
+- `spring-boot-starter-webmvc`
+- `spring-boot-starter-data-jpa`
+- `spring-boot-starter-validation`
+- `spring-boot-starter-webflux`
+- `spring-boot-starter-flyway`
+- `org.flywaydb:flyway-database-postgresql`
+- `postgresql`
+- `lombok`
 
-UseCase implementation (SalvarVeiculoUseCaseImpl)
+---
 
-Commands/DTOs de entrada (ex.: CadastrarVeiculoCommand)
+## ▶️ Como Executar o Projeto
 
-Mappers de aplicação (ex.: VeiculoMapper)
+### 1️⃣ Subir o PostgreSQL com Docker
 
-infra
-
-Adapters de persistência (JPA)
-
-Entities JPA (VeiculoEntity)
-
-Mappers entity↔domain (VeiculoEntityMapper)
-
-Integração externa via WebClient (VeiculoInfoGatewayMockaroo)
-
-Configuração (WebClientConfig)
-
-presentation
-
-Controllers (VeiculoController)
-
-Handler global de exceptions (opcional)
-
-🔧 #Tecnologias e ferramentas
-
-Java (versão do projeto)
-
-Spring Boot
-
-Spring Web MVC (API REST)
-
-Spring Data JPA (persistência)
-
-Spring Validation (Bean Validation)
-
-Spring WebFlux (WebClient para integração externa)
-
-PostgreSQL (Docker)
-
-Flyway (migrations)
-
-Maven
-
-Lombok
-
-Docker / Docker Compose
-
-Postman/Insomnia para testes de API
-
-📦 #Dependências principais (Maven)
-
-spring-boot-starter-webmvc
-
-spring-boot-starter-data-jpa
-
-spring-boot-starter-validation
-
-spring-boot-starter-webflux (WebClient)
-
-spring-boot-starter-flyway
-
-org.flywaydb:flyway-database-postgresql
-
-postgresql
-
-lombok
+```bash
+docker compose up -d
